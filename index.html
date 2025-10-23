@@ -1,0 +1,41 @@
+#Create Directory /home/pi/templates and place this file in there as index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eInk Slideshow Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f8f9fa; padding: 20px; }
+    img { max-width: 180px; max-height: 120px; object-fit: cover; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4 text-center">📸 eInk Slideshow Manager</h1>
+
+    <form action="/upload" method="post" enctype="multipart/form-data" class="mb-4">
+      <div class="input-group">
+        <input type="file" name="file" class="form-control" required>
+        <button class="btn btn-primary" type="submit">Upload</button>
+      </div>
+    </form>
+
+    <div class="row">
+      {% for image in images %}
+        <div class="col-md-3 col-sm-4 col-6 mb-4 text-center">
+          <div class="card shadow-sm">
+            <img src="/images/{{ image }}" class="card-img-top" alt="{{ image }}">
+            <div class="card-body">
+              <p class="card-text small">{{ image }}</p>
+              <form action="/delete/{{ image }}" method="post">
+                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
